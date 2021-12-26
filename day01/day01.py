@@ -7,13 +7,29 @@ inputList = rawInput.split(",")
 
 def calculateNumberOfIncreases():
     total = 0
-    previousValue = any
+    previousValue = 0
     for numberString in inputList:
         number = int(numberString)
-        if previousValue is not None and previousValue < number:
+        if not previousValue == 0 and previousValue < number:
             total += 1
         previousValue = number
     return total
 
 
-print(calculateNumberOfIncreases())
+def calculateNumberOfIncreasesForThreeMeasurementWindow():
+    total = 0
+    threeNumbersList = []
+    for numberString in inputList:
+        number = int(numberString)
+        if len(threeNumbersList) == 3:
+            previousListSum = sum(threeNumbersList)
+            currentListSum = previousListSum - threeNumbersList[0] + number
+            del threeNumbersList[0]
+            if previousListSum < currentListSum:
+                total += 1
+        threeNumbersList.append(number)
+    return total
+
+
+print(calculateNumberOfIncreases(),
+      calculateNumberOfIncreasesForThreeMeasurementWindow())
